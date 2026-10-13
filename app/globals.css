@@ -51,6 +51,12 @@
     scroll-padding-top: calc(var(--header-h) + 16px);
   }
 
+  /* Défilement fluide (Lenis, components/motion/smooth-scroll.tsx) */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
   body {
     background: var(--color-bg);
     color: var(--color-ink);
@@ -155,10 +161,23 @@
     width: 100%;
     background: currentColor;
     transform-origin: left;
-    transition: transform 0.5s var(--ease-soft);
+    transition:
+      transform 0.5s var(--ease-soft),
+      scale 0.6s var(--ease-soft);
   }
   .link-underline:hover::after {
     transform: scaleX(1.12);
+  }
+  /* Liens secondaires : le filet file vers la droite puis revient depuis la gauche, la flèche avance */
+  .link-sweep:hover::after {
+    animation: underline-sweep 0.8s var(--ease-soft);
+  }
+  .link-arrow {
+    display: inline-block;
+    transition: translate 0.6s var(--ease-soft);
+  }
+  .link-underline:hover .link-arrow {
+    translate: 5px 0;
   }
 
   /* Voile en dégradé noir pour le texte blanc posé sur une photo (contraste AA) */
@@ -225,14 +244,34 @@
   animation: skeleton-pulse 1.6s ease-in-out infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
+@keyframes drawer-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes underline-sweep {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  42% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  43% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 }
 
@@ -248,7 +287,7 @@
 
 .line-rise {
   display: block;
-  animation: line-rise 1s var(--ease-soft) both;
+  animation: line-rise 1.1s var(--ease-soft) both;
 }
 
 /* --------------------------------------------------------------------------
@@ -269,4 +308,427 @@
 }
 body:has([data-hero-photo]) .site-header[data-at-top="true"] {
   color: #ffffff;
+}
+.site-header .header-cta:hover {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: #ffffff;
+}
+body:has([data-hero-photo]) .site-header[data-at-top="true"] .header-cta:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--color-ink);
+}
+
+/* ==========================================================================
+   Système d'animation
+   - [data-reveal="…"] : révélé au défilement. components/motion/reveal-observer.tsx
+     pose data-reveal-ready sur <html> puis data-revealed quand l’élément entre dans l’écran.
+   - Les états masqués n’existent qu’avec html[data-reveal-ready] (après hydratation ;
+     ce qui est déjà à l’écran est marqué révélé d’emblée) : sans JavaScript, tout reste visible.
+   - --d : délai (s) ; --i : rang d'un mot ou d'une lettre ; --n : rang d'une ligne.
+   ========================================================================== */
+
+/* Mots d'un titre : chaque mot monte derrière un masque (clip-path : la ligne de base est préservée) */
+.word {
+  display: inline-block;
+  clip-path: inset(-0.5em -0.35em -0.24em -0.35em);
+}
+.word > span {
+  display: inline-block;
+}
+
+/* Filet de tête des listes à filets (tracé de gauche à droite à l'apparition) */
+.rule-line {
+  position: relative;
+}
+.rule-line::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: var(--rule, var(--color-ink));
+  transform-origin: left;
+  pointer-events: none;
+}
+[data-reveal="rules"] > :nth-child(2) {
+  --n: 1;
+}
+[data-reveal="rules"] > :nth-child(3) {
+  --n: 2;
+}
+[data-reveal="rules"] > :nth-child(4) {
+  --n: 3;
+}
+[data-reveal="rules"] > :nth-child(5) {
+  --n: 4;
+}
+[data-reveal="rules"] > :nth-child(6) {
+  --n: 5;
+}
+[data-reveal="rules"] > :nth-child(7) {
+  --n: 6;
+}
+[data-reveal="rules"] > :nth-child(n + 8) {
+  --n: 7;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes word-rise {
+  from {
+    translate: 0 130%;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    scale: 1.12;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes img-drift {
+  from {
+    transform: translateY(-5%) scale(1.1);
+  }
+  to {
+    transform: translateY(5%) scale(1.1);
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+@keyframes menu-in {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes menu-out {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+@keyframes count-roll {
+  from {
+    opacity: 0;
+    translate: 0 60%;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Libellé des boutons pilule : le texte roule vers le haut au survol */
+.btn-roll {
+  display: inline-grid;
+  overflow: hidden;
+  padding-block: 0.15em;
+  margin-block: -0.15em;
+}
+.btn-roll > span {
+  grid-area: 1 / 1;
+  transition: translate 0.65s var(--ease-soft);
+}
+.btn-roll > span + span {
+  translate: 0 115%;
+}
+
+/* Saisie : le filet noir se trace de gauche à droite au focus */
+.field-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  background-origin: border-box;
+  transition:
+    background-size 0.7s var(--ease-soft),
+    border-color 0.2s;
+}
+.field-draw:focus-visible {
+  background-size: 100% 2px;
+}
+
+/* Indicateur « Défiler » du hero */
+.scroll-cue-line {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 56px;
+  background: rgb(255 255 255 / 0.25);
+  overflow: hidden;
+}
+.scroll-cue-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  transform: scaleY(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* — Au défilement — */
+  :root[data-reveal-ready] [data-reveal="up"] {
+    opacity: 0;
+    translate: 0 18px;
+    transition:
+      opacity 0.9s var(--ease-soft) var(--d, 0s),
+      translate 0.9s var(--ease-soft) var(--d, 0s);
+  }
+  :root[data-reveal-ready] [data-reveal="up"][data-revealed] {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  :root[data-reveal-ready] [data-reveal="words"] .word > span {
+    translate: 0 130%;
+    transition: translate 1.15s var(--ease-soft);
+    transition-delay: calc(var(--d, 0s) + var(--i, 0) * 45ms);
+  }
+  :root[data-reveal-ready] [data-reveal="words"][data-revealed] .word > span {
+    translate: 0 0;
+  }
+
+  :root[data-reveal-ready] [data-reveal="image"] {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1.4s var(--ease-soft) var(--d, 0s);
+  }
+  :root[data-reveal-ready] [data-reveal="image"] .reveal-zoom {
+    scale: 1.12;
+    transition: scale 2s var(--ease-soft) var(--d, 0s);
+  }
+  :root[data-reveal-ready] [data-reveal="image"][data-revealed] {
+    clip-path: inset(0 0 0 0);
+  }
+  :root[data-reveal-ready] [data-reveal="image"][data-revealed] .reveal-zoom {
+    scale: 1;
+  }
+
+  :root[data-reveal-ready] [data-reveal="rules"]::before {
+    scale: 0 1;
+    transition: scale 1.4s var(--ease-soft) var(--d, 0s);
+  }
+  :root[data-reveal-ready] [data-reveal="rules"][data-revealed]::before {
+    scale: 1 1;
+  }
+  :root[data-reveal-ready] [data-reveal="rules"] > * {
+    opacity: 0;
+    translate: 0 14px;
+    transition:
+      opacity 0.8s var(--ease-soft),
+      translate 0.8s var(--ease-soft);
+    transition-delay: calc(var(--d, 0s) + 0.15s + var(--n, 0) * 70ms);
+  }
+  :root[data-reveal-ready] [data-reveal="rules"][data-revealed] > * {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  :root[data-reveal-ready] [data-reveal="letters"] > span {
+    translate: 0 102%;
+    transition: translate 1.3s var(--ease-soft);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  :root[data-reveal-ready] [data-reveal="letters"][data-revealed] > span {
+    translate: 0 0;
+  }
+
+  /* — Au chargement (hero, en-têtes de page) : CSS seul, n'attend pas l'hydratation — */
+  .hero-zoom {
+    animation: hero-zoom 2.6s var(--ease-soft) both;
+  }
+  .intro-rise {
+    animation: rise-in 1.1s var(--ease-soft) both;
+    animation-delay: var(--d, 0s);
+  }
+  [data-reveal-load] .word > span {
+    animation: word-rise 1.15s var(--ease-soft) both;
+    animation-delay: calc(var(--d, 0.15s) + var(--i, 0) * 60ms);
+  }
+  .site-header {
+    animation: fade-in 1s ease-out 0.2s both;
+  }
+  .scroll-cue-line::after {
+    animation: scroll-cue 2.6s var(--ease-soft) 1.4s infinite;
+  }
+
+  /* Légère dérive verticale des photos pendant le défilement (navigateurs compatibles) */
+  @supports (animation-timeline: view()) {
+    .img-drift {
+      animation: img-drift linear both;
+      animation-timeline: view();
+    }
+  }
+
+  /* — Micro-interactions — */
+  @media (hover: hover) {
+    :is(a, button):hover > .btn-roll > span:first-child {
+      translate: 0 -115%;
+    }
+    :is(a, button):hover > .btn-roll > span + span {
+      translate: 0 0;
+    }
+  }
+
+  /* Boutons « aimantés » : components/motion/pointer-effects.tsx pose --mx / --my */
+  [data-magnetic] {
+    translate: var(--mx, 0) var(--my, 0);
+    transition:
+      translate 0.7s var(--ease-soft),
+      background-color 0.3s var(--ease-soft),
+      color 0.3s var(--ease-soft),
+      border-color 0.3s var(--ease-soft),
+      opacity 0.3s var(--ease-soft);
+  }
+
+  /* Menu mobile : rideau qui descend, liens qui montent un à un */
+  .mobile-menu[data-state="open"] {
+    animation: menu-in 0.75s var(--ease-soft) both;
+  }
+  .mobile-menu[data-state="closed"] {
+    animation: menu-out 0.55s var(--ease-soft) both;
+  }
+  .mobile-menu[data-state="open"] .menu-item > * {
+    animation: word-rise 1s var(--ease-soft) both;
+    animation-delay: calc(0.2s + var(--i, 0) * 55ms);
+  }
+  .mobile-menu[data-state="open"] .menu-foot {
+    animation: rise-in 0.9s var(--ease-soft) 0.55s both;
+  }
+
+  /* Panier */
+  .cart-overlay[data-state="open"] {
+    animation: fade-in 0.4s ease-out both;
+  }
+  .cart-overlay[data-state="closed"] {
+    animation: fade-out 0.35s ease-in both;
+  }
+  .cart-panel[data-state="open"] {
+    animation: drawer-in 0.6s var(--ease-soft) both;
+  }
+  .cart-panel[data-state="closed"] {
+    animation: drawer-out 0.4s var(--ease-soft) both;
+  }
+  .cart-panel[data-state="open"] .cart-line {
+    animation: rise-in 0.7s var(--ease-soft) both;
+    animation-delay: calc(0.2s + var(--n, 0) * 60ms);
+  }
+  .count-roll {
+    display: inline-block;
+    animation: count-roll 0.5s var(--ease-soft) both;
+  }
+
+  /* Étapes de réservation, réponses de la FAQ */
+  .step-in {
+    animation: rise-in 0.7s var(--ease-soft) both;
+  }
+  [data-state="open"] > .accordion-inner {
+    animation: rise-in 0.6s var(--ease-soft) 0.05s both;
+  }
+}
+
+/* ==========================================================================
+   Transitions entre pages (View Transitions, via <ViewTransition> dans template.tsx)
+   L'ancienne page s'efface vite, la nouvelle monte doucement ; le header ne bouge pas.
+   ========================================================================== */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(root) {
+  display: none;
+}
+::view-transition-new(root) {
+  animation: none;
+}
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+::view-transition-old(.page) {
+  animation: page-out 0.32s cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(.page) {
+  animation: page-in 0.9s var(--ease-soft) 0.18s both;
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+    translate: 0 -14px;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Respect absolu de prefers-reduced-motion : aucune animation de mouvement
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

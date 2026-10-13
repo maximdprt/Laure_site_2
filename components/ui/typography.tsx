@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from "react";
+import type { ComponentProps, CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /** Repère de section en Geist Mono : « (01) La méthode » */
@@ -37,21 +37,77 @@ type SplitTitleProps = {
   breakBefore?: boolean;
   className?: string;
   id?: string;
+  /**
+   * Animation des mots : "load" = dès l'affichage (par défaut pour un h1, en haut de page),
+   * "scroll" = à l'entrée dans l'écran (par défaut ailleurs), false = aucune.
+   */
+  reveal?: "load" | "scroll" | false;
 };
 
+/**
+ * Découpe un texte en mots masqués (.word) pour l'animation « mot par mot ».
+ * Seules les espaces ordinaires séparent les mots : les espaces insécables restent collées (« unique ? »).
+ */
+function splitWords(text: string, start: number): { nodes: ReactNode[]; next: number } {
+  const nodes: ReactNode[] = [];
+  let i = start;
+  for (const word of text.split(/[ \t\n]+/).filter(Boolean)) {
+    if (nodes.length) nodes.push(" ");
+    nodes.push(
+      <span key={i} className="word">
+        <span style={{ "--i": i } as CSSProperties}>{word}</span>
+      </span>,
+    );
+    i++;
+  }
+  return { nodes, next: i };
+}
+
 /** Titre alterné : sans-serif très fine + mot ou fin de phrase en serif italique */
-export function SplitTitle({ lead, accent, as: Tag = "h2", size, breakBefore, className, id }: SplitTitleProps) {
+export function SplitTitle({ lead, accent, as: Tag = "h2", size, breakBefore, className, id, reveal }: SplitTitleProps) {
   const s = size ?? (Tag === "p" ? "h2" : Tag);
   const sizeClass = { h1: "text-h1 leading-[0.98] tracking-[-0.035em]", h2: "text-h2 leading-[1] tracking-[-0.03em]", h3: "text-h3 leading-[1.15] tracking-[-0.02em]" }[s];
+  const mode = reveal ?? (Tag === "h1" ? "load" : "scroll");
+  const splittable = mode !== false && typeof lead === "string" && (accent === undefined || typeof accent === "string");
+
+  if (!splittable) {
+    return (
+      <Tag
+        id={id}
+        data-reveal={mode === "scroll" ? "up" : undefined}
+        className={cn("font-light", sizeClass, mode === "load" && "intro-rise", className)}
+      >
+        {lead}
+        {accent && (
+          <>
+            {breakBefore ? <br /> : " "}
+            <span className="serif-accent">{accent}</span>
+          </>
+        )}
+      </Tag>
+    );
+  }
+
+  // Les mots découpés sont masqués aux lecteurs d'écran : le titre complet est porté par aria-label
+  const leadWords = splitWords(lead, 0);
+  const accentWords = typeof accent === "string" ? splitWords(accent, leadWords.next) : null;
   return (
-    <Tag id={id} className={cn("font-light", sizeClass, className)}>
-      {lead}
-      {accent && (
-        <>
-          {breakBefore ? <br /> : " "}
-          <span className="serif-accent">{accent}</span>
-        </>
-      )}
+    <Tag
+      id={id}
+      aria-label={accent ? `${lead} ${accent}` : lead}
+      data-reveal={mode === "scroll" ? "words" : undefined}
+      data-reveal-load={mode === "load" ? "" : undefined}
+      className={cn("font-light", sizeClass, className)}
+    >
+      <span aria-hidden>
+        {leadWords.nodes}
+        {accentWords && (
+          <>
+            {breakBefore ? <br /> : " "}
+            <span className="serif-accent">{accentWords.nodes}</span>
+          </>
+        )}
+      </span>
     </Tag>
   );
 }

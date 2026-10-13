@@ -1,8 +1,11 @@
 import { getLocale, getTranslations } from "next-intl/server";
+import type { CSSProperties } from "react";
 import { footerNav, legalNav } from "@/config/nav";
 import { isPlaceholder, siteConfig } from "@/config/site";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { BackToTop } from "@/components/motion/back-to-top";
+import { Reveal } from "@/components/ui/reveal";
 import { NewsletterForm } from "./newsletter-form";
 
 /** Footer sombre : baseline, 3 colonnes, mot-symbole géant, mention bien-être et liens légaux */
@@ -16,25 +19,32 @@ export async function Footer() {
   return (
     <footer data-tone="dark" className="bg-dark text-on-dark">
       <div className="container-site pb-10 pt-20 md:pt-28">
-        <p className="serif-accent max-w-4xl text-[clamp(30px,3.6vw,52px)] leading-[1.08] text-white">
-          {siteConfig.baseline[locale]}
-        </p>
+        <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+          <Reveal>
+            <p className="serif-accent max-w-4xl text-[clamp(30px,3.6vw,52px)] leading-[1.08] text-white">
+              {siteConfig.baseline[locale]}
+            </p>
+          </Reveal>
+          <BackToTop className="shrink-0 self-start md:self-auto" />
+        </div>
 
         <div className="mt-16 grid gap-12 border-t border-white/15 pt-12 md:mt-24 md:grid-cols-3 md:gap-8">
-          <nav aria-label={t("a11y.footerNav")}>
-            <h2 className="label-mono mb-5 text-on-dark">{t("footer.navTitle")}</h2>
-            <ul className="flex flex-col gap-1">
-              {footerNav.map((item) => (
-                <li key={item.key}>
-                  <Link href={item.href} className={linkClass}>
-                    {t(`nav.${item.key}`)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <Reveal>
+            <nav aria-label={t("a11y.footerNav")}>
+              <h2 className="label-mono mb-5 text-on-dark">{t("footer.navTitle")}</h2>
+              <ul className="flex flex-col gap-1">
+                {footerNav.map((item) => (
+                  <li key={item.key}>
+                    <Link href={item.href} className={linkClass}>
+                      {t(`nav.${item.key}`)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </Reveal>
 
-          <div>
+          <Reveal index={1}>
             <h2 className="label-mono mb-5 text-on-dark">{t("footer.contactTitle")}</h2>
             <address className="flex flex-col gap-3 text-[15px] not-italic">
               <span>
@@ -82,21 +92,26 @@ export async function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal index={2}>
             <h2 className="label-mono mb-5 text-on-dark">{t("footer.newsletterTitle")}</h2>
             <p className="mb-6 text-[15px]">{t("footer.newsletterText")}</p>
             <NewsletterForm tone="dark" />
-          </div>
+          </Reveal>
         </div>
       </div>
 
       <p
         aria-hidden
-        className="select-none overflow-hidden whitespace-nowrap text-center text-[clamp(80px,21vw,300px)] font-light leading-[0.8] tracking-[-0.04em] text-white"
+        data-reveal="letters"
+        className="select-none overflow-hidden whitespace-nowrap pb-[0.04em] text-center text-[clamp(80px,21vw,300px)] font-light leading-[0.8] tracking-[-0.04em] text-white"
       >
-        NLIGHT
+        {Array.from("NLIGHT", (letter, i) => (
+          <span key={i} className="inline-block" style={{ "--i": i } as CSSProperties}>
+            {letter}
+          </span>
+        ))}
       </p>
 
       <div className="container-site flex flex-col gap-5 pb-28 pt-10 text-[12px] leading-relaxed lg:pb-10">

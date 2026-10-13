@@ -28,6 +28,7 @@ export async function PostTeaser({
       <Link
         href={{ pathname: "/journal/[slug]", params: { slug: post.slug } }}
         className={cn("group block", featured && "md:grid md:grid-cols-2 md:items-end md:gap-8")}
+        data-cursor="read"
       >
         <SiteImage
           imageKey={post.cover}
@@ -44,7 +45,7 @@ export async function PostTeaser({
           </p>
           <Heading
             className={cn(
-              "mt-3 font-light tracking-[-0.025em] transition-opacity group-hover:opacity-70",
+              "mt-3 font-light tracking-[-0.025em] underline decoration-transparent decoration-1 underline-offset-[0.18em] transition-[text-decoration-color] duration-500 group-hover:decoration-current",
               featured ? "text-[clamp(30px,3.4vw,48px)] leading-[1.05]" : "text-[26px] leading-[1.12]",
             )}
           >
@@ -53,7 +54,9 @@ export async function PostTeaser({
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ink-muted">{post.description}</p>
           <span className="link-underline mt-3 text-[14px]">
             {t("common.readMore")}
-            <span aria-hidden>→</span>
+            <span aria-hidden className="inline-block transition-[translate] duration-500 ease-soft group-hover:translate-x-1.5">
+              →
+            </span>
           </span>
         </div>
       </Link>

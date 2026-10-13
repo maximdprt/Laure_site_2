@@ -6,13 +6,21 @@ import { cn } from "@/lib/utils";
 /**
  * Liste à filets : commence par un filet encre, chaque ligne est séparée par un filet fin.
  * Utilisée pour les étapes, les tarifs, la FAQ, la sélection de prestation et les coordonnées.
+ * À l'apparition, le filet de tête se trace et les lignes arrivent l'une après l'autre
+ * (reveal=false pour une liste qui change d'état, dans un formulaire par exemple).
  */
-export function RuleList({ className, tone = "light", ...props }: ComponentProps<"ul"> & { tone?: "light" | "dark" }) {
+export function RuleList({
+  className,
+  tone = "light",
+  reveal = true,
+  ...props
+}: ComponentProps<"ul"> & { tone?: "light" | "dark"; reveal?: boolean }) {
   return (
     <ul
+      data-reveal={reveal ? "rules" : undefined}
       className={cn(
-        "border-t",
-        tone === "dark" ? "border-white/70 [&>li]:border-white/20" : "border-ink [&>li]:border-line",
+        "rule-line",
+        tone === "dark" ? "[--rule:rgb(255_255_255/0.7)] [&>li]:border-white/20" : "[&>li]:border-line",
         "[&>li]:border-b",
         className,
       )}
@@ -41,6 +49,7 @@ export function RuleLinkItem({
         href={href}
         className={cn(
           "group flex items-start justify-between gap-6 py-6 transition-[padding] duration-500 ease-soft hover:pl-1.5 md:py-7",
+          "focus-visible:pl-1.5",
           className,
         )}
       >

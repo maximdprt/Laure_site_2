@@ -131,13 +131,13 @@ export function BookingModule({ initialService }: { initialService?: ServiceId }
       </div>
 
       {error && step !== "summary" && (
-        <div role="alert" className="mb-8 border-l-2 border-danger py-1 pl-4 text-[15px] text-danger">
+        <div role="alert" className="step-in mb-8 border-l-2 border-danger py-1 pl-4 text-[15px] text-danger">
           {error}
         </div>
       )}
 
       {step === "service" && (
-        <div>
+        <div className="step-in">
           <ChoiceList<ServiceId>
             name="service"
             legend={t("chooseService")}
@@ -165,7 +165,7 @@ export function BookingModule({ initialService }: { initialService?: ServiceId }
       )}
 
       {step === "format" && service && (
-        <div>
+        <div className="step-in">
           <ChoiceList<BookingFormat>
             name="format"
             legend={t("chooseFormat")}
@@ -182,7 +182,7 @@ export function BookingModule({ initialService }: { initialService?: ServiceId }
       )}
 
       {step === "slot" && draft.serviceId && draft.format && (
-        <div>
+        <div className="step-in">
           <StepSlot
             serviceId={draft.serviceId}
             format={draft.format}
@@ -201,7 +201,7 @@ export function BookingModule({ initialService }: { initialService?: ServiceId }
       )}
 
       {step === "details" && draft.serviceId && draft.format && draft.start && (
-        <div>
+        <div className="step-in">
           <StepDetails
             serviceId={draft.serviceId}
             format={draft.format}
@@ -221,7 +221,9 @@ export function BookingModule({ initialService }: { initialService?: ServiceId }
       )}
 
       {step === "summary" && draft.details && (
-        <StepSummary values={draft.details} pending={pending} error={error} onEdit={go} onConfirm={confirm} />
+        <div className="step-in">
+          <StepSummary values={draft.details} pending={pending} error={error} onEdit={go} onConfirm={confirm} />
+        </div>
       )}
     </div>
   );

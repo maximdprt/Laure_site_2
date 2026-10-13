@@ -51,7 +51,9 @@
     "pricePerSession": "per session",
     "placeholderImage": "Image coming soon",
     "faqTitleLead": "Frequently asked",
-    "faqTitleAccent": "questions"
+    "faqTitleAccent": "questions",
+    "scroll": "Scroll",
+    "backToTop": "Back to top"
   },
   "universes": {
     "fleurs": "Flowers",
@@ -350,5 +352,10 @@
     "readyDetail": "Shop · {volume}",
     "freeFrom": "Free delivery from {threshold}",
     "pickupDetail": "By appointment, free of charge"
+  },
+  "cursor": {
+    "view": "View",
+    "read": "Read",
+    "book": "Book"
   }
 }

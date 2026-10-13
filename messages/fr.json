@@ -50,7 +50,9 @@
     "pricePerSession": "la séance",
     "placeholderImage": "Image à venir",
     "faqTitleLead": "Questions",
-    "faqTitleAccent": "fréquentes"
+    "faqTitleAccent": "fréquentes",
+    "scroll": "Défiler",
+    "backToTop": "Haut de page"
   },
   "universes": {
     "fleurs": "Fleurs",
@@ -349,5 +351,10 @@
     "readyDetail": "Boutique · {volume}",
     "freeFrom": "Livraison offerte dès {threshold}",
     "pickupDetail": "Sur rendez-vous, sans frais"
+  },
+  "cursor": {
+    "view": "Voir",
+    "read": "Lire",
+    "book": "Réserver"
   }
 }

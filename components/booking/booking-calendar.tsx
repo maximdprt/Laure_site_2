@@ -167,7 +167,7 @@ export function BookingCalendar({
                       onFocus={() => onFocusDay(day)}
                       onClick={() => available && onSelectDay(day)}
                       className={cn(
-                        "mx-auto grid aspect-square w-full max-w-12 place-items-center rounded-full font-mono text-[14px] transition-colors",
+                        "mx-auto grid aspect-square w-full max-w-12 place-items-center rounded-full font-mono text-[14px] transition-[background-color,color,scale] duration-300 ease-soft active:scale-90",
                         loading && "animate-pulse text-ink-muted/50",
                         !loading && !available && "cursor-default text-ink-muted/45 line-through decoration-1",
                         available && !selected && "cursor-pointer text-ink hover:bg-ink/8",

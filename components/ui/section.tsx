@@ -1,5 +1,6 @@
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { Reveal } from "./reveal";
 import { SectionLabel } from "./typography";
 
 type SectionProps = ComponentProps<"section"> & {
@@ -46,13 +47,17 @@ export function SectionHeader({
   return (
     <header className={cn("mb-12 grid gap-6 md:mb-20 lg:grid-cols-12 lg:gap-8", className)}>
       {label && (
-        <div className="lg:col-span-3">
+        <Reveal className="lg:col-span-3">
           <SectionLabel number={number}>{label}</SectionLabel>
-        </div>
+        </Reveal>
       )}
       <div className={label ? "lg:col-span-9" : "lg:col-span-12"}>
         {title}
-        {intro && <div className="mt-6 max-w-2xl text-lead text-ink-muted">{intro}</div>}
+        {intro && (
+          <Reveal delay={0.25} className="mt-6 max-w-2xl text-lead text-ink-muted">
+            {intro}
+          </Reveal>
+        )}
       </div>
     </header>
   );

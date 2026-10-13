@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart-store";
 import { cn } from "@/lib/utils";
@@ -48,12 +48,15 @@ export function MobileCta() {
   if (hidden) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 px-4 pb-[max(14px,env(safe-area-inset-bottom))] lg:hidden">
+    <div
+      className="intro-rise pointer-events-none fixed inset-x-0 bottom-0 z-30 px-4 pb-[max(14px,env(safe-area-inset-bottom))] lg:hidden"
+      style={{ "--d": "0.9s" } as CSSProperties}
+    >
       <Link
         ref={ref}
         href="/rendez-vous"
         className={cn(
-          "pointer-events-auto flex min-h-13 w-full items-center justify-center rounded-full text-[15px] transition-colors duration-300",
+          "pointer-events-auto flex min-h-13 w-full items-center justify-center rounded-full text-[15px] transition-[background-color,color,scale] duration-300 active:scale-[0.98]",
           onDark ? "bg-white text-ink" : "bg-ink text-white",
         )}
       >

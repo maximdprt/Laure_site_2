@@ -14,9 +14,11 @@ import { PostTeaser } from "@/components/blog/post-list";
 import { ShareLinks } from "@/components/blog/share-links";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { ReadingProgress } from "@/components/motion/reading-progress";
 import { PageIntro } from "@/components/sections/page-intro";
 import { LinkUnderline } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
+import { delayStyle } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { SiteImage } from "@/components/ui/site-image";
 import { MonoLabel, SectionLabel } from "@/components/ui/typography";
@@ -84,6 +86,7 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <article>
+      <ReadingProgress />
       <PageIntro
         breadcrumbs={
           <Breadcrumbs
@@ -99,7 +102,7 @@ export default async function ArticlePage({ params }: Props) {
           </>
         }
         title={
-          <h1 className="max-w-5xl text-[clamp(40px,5.6vw,84px)] font-light leading-[1] tracking-[-0.035em]">
+          <h1 className="intro-rise max-w-5xl text-[clamp(40px,5.6vw,84px)] font-light leading-[1] tracking-[-0.035em]">
             {post.title}
           </h1>
         }
@@ -108,7 +111,11 @@ export default async function ArticlePage({ params }: Props) {
       </PageIntro>
 
       <div className="container-site">
-        <SiteImage imageKey={post.cover} locale={locale} ratio="16/9" priority sizes="(min-width: 1424px) 1360px, 100vw" />
+        <div className="intro-rise overflow-hidden" style={delayStyle(0.45)}>
+          <div className="hero-zoom">
+            <SiteImage imageKey={post.cover} locale={locale} ratio="16/9" priority sizes="(min-width: 1424px) 1360px, 100vw" />
+          </div>
+        </div>
       </div>
 
       <Section tight>

@@ -29,6 +29,8 @@ type MediaProps = {
   hoverZoom?: boolean;
   /** Image décorative (le texte alternatif est déjà porté par le lien parent) */
   decorative?: boolean;
+  /** Légère dérive verticale pendant le défilement (CSS scroll-driven, .img-drift) */
+  drift?: boolean;
 };
 
 /**
@@ -45,11 +47,15 @@ export function Media({
   className,
   hoverZoom,
   decorative,
+  drift,
 }: MediaProps) {
   const image: (typeof images)[ImageKey] = images[imageKey];
   const r = ratio ?? image.ratio;
   const alt = decorative ? "" : image.alt[locale];
-  const zoom = hoverZoom && "transition-transform duration-[1.2s] ease-soft group-hover:scale-[1.03]";
+  const zoom = cn(
+    hoverZoom && "transition-[scale] duration-[1.4s] ease-soft group-hover:scale-[1.04]",
+    drift && "img-drift",
+  );
   return (
     <div className={cn("relative overflow-hidden", r === "fill" ? "absolute inset-0" : ratioClass[r], className)}>
       {available ? (

@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { Dialog } from "radix-ui";
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import type { ImageKey } from "@/config/images";
 import { getProduct } from "@/config/products";
 import { FREE_SHIPPING_THRESHOLD_CENTS } from "@/config/shipping";
@@ -56,10 +56,11 @@ export function CartDrawer({ imageAvailability }: { imageAvailability: Partial<R
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => (open ? undefined : close())}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/35 data-[state=open]:animate-[fade-in_0.3s_ease-out]" />
+        <Dialog.Overlay className="cart-overlay fixed inset-0 z-50 bg-black/35 backdrop-blur-[2px]" />
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[460px] flex-col bg-bg text-ink data-[state=open]:animate-[drawer-in_0.5s_var(--ease-soft)]"
+          data-lenis-prevent
+          className="cart-panel fixed inset-y-0 right-0 z-50 flex w-full max-w-[460px] flex-col bg-bg text-ink"
         >
           <div className="flex items-center justify-between px-6 pb-4 pt-6 md:px-8">
             <Dialog.Title className="text-[28px] font-light tracking-[-0.02em]">{t("title")}</Dialog.Title>
@@ -75,9 +76,13 @@ export function CartDrawer({ imageAvailability }: { imageAvailability: Partial<R
             </div>
           ) : (
             <>
-              <ul className="mx-6 flex-1 overflow-y-auto border-t border-ink md:mx-8">
-                {items.map(({ line, product }) => (
-                  <li key={product.slug} className="flex gap-4 border-b border-line py-5">
+              <ul className="mx-6 flex-1 overflow-y-auto overscroll-contain border-t border-ink md:mx-8">
+                {items.map(({ line, product }, i) => (
+                  <li
+                    key={product.slug}
+                    className="cart-line flex gap-4 border-b border-line py-5"
+                    style={{ "--n": Math.min(i, 6) } as CSSProperties}
+                  >
                     <Media
                       imageKey={product.image}
                       locale={locale}
@@ -115,8 +120,10 @@ export function CartDrawer({ imageAvailability }: { imageAvailability: Partial<R
                           >
                             −
                           </button>
-                          <span className="w-6 text-center font-mono text-[13px]" aria-live="polite">
-                            {line.quantity}
+                          <span className="w-6 overflow-hidden text-center font-mono text-[13px]" aria-live="polite">
+                            <span key={line.quantity} className="count-roll">
+                              {line.quantity}
+                            </span>
                           </span>
                           <button
                             type="button"
@@ -144,7 +151,9 @@ export function CartDrawer({ imageAvailability }: { imageAvailability: Partial<R
               <div className="flex flex-col gap-4 px-6 pb-8 pt-6 md:px-8">
                 <div className="flex items-baseline justify-between border-t border-ink pt-5">
                   <span className="label-mono text-ink-muted">{t("subtotal")}</span>
-                  <span className="serif-accent text-[30px] leading-none">{formatPrice(subtotal, locale)}</span>
+                  <span key={subtotal} className="count-roll serif-accent text-[30px] leading-none">
+                    {formatPrice(subtotal, locale)}
+                  </span>
                 </div>
                 <p className="text-[13px] text-ink-muted">
                   {t("shippingNote", { threshold: formatPrice(FREE_SHIPPING_THRESHOLD_CENTS, locale) })}

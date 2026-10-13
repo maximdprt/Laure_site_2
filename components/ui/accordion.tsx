@@ -4,9 +4,9 @@ import { Accordion as AccordionPrimitive } from "radix-ui";
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
-/** Accordéon à filets (FAQ) — commence par un filet encre */
+/** Accordéon à filets (FAQ) — commence par un filet encre, tracé à l'apparition */
 export function Accordion({ className, ...props }: ComponentProps<typeof AccordionPrimitive.Root>) {
-  return <AccordionPrimitive.Root className={cn("border-t border-ink", className)} {...props} />;
+  return <AccordionPrimitive.Root data-reveal="rules" className={cn("rule-line", className)} {...props} />;
 }
 
 export function AccordionItem({ className, ...props }: ComponentProps<typeof AccordionPrimitive.Item>) {
@@ -50,7 +50,7 @@ export function AccordionContent({ className, children, ...props }: ComponentPro
       className="overflow-hidden data-[state=closed]:animate-[accordion-up_0.3s_ease-out] data-[state=open]:animate-[accordion-down_0.45s_var(--ease-soft)]"
       {...props}
     >
-      <div className={cn("prose-site pb-7 pr-10 text-ink-muted", className)}>{children}</div>
+      <div className={cn("accordion-inner prose-site pb-7 pr-10 text-ink-muted", className)}>{children}</div>
     </AccordionPrimitive.Content>
   );
 }

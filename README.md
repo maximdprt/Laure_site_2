@@ -162,6 +162,7 @@ Fiche Google Business Profile : voir `docs/google-business-checklist.md`.
   | Commande | Rôle |
   |---|---|
   | `pnpm dev` | Développement (http://localhost:3000) |
+  | `pnpm dev:webpack` | Même chose avec webpack : à utiliser si `pnpm dev` affiche l'erreur `0xc0000142` (Windows à court de mémoire, Turbopack ne peut plus lancer PostCSS) |
   | `pnpm build` / `pnpm start` | Build et serveur de production |
   | `pnpm lint` | ESLint, zéro avertissement |
   | `pnpm typecheck` | Types des routes + TypeScript |

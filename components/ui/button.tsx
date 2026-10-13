@@ -37,17 +37,39 @@ export const buttonVariants = cva(
 
 type Variants = VariantProps<typeof buttonVariants>;
 
+/**
+ * Libellé texte doublé : au survol, il roule vers le haut et laisse place à sa copie
+ * (copie masquée aux lecteurs d'écran ; animation dans globals.css, .btn-roll).
+ */
+function RollLabel({ children }: { children: ReactNode }) {
+  if (typeof children !== "string") return children;
+  return (
+    <span className="btn-roll">
+      <span>{children}</span>
+      <span aria-hidden>{children}</span>
+    </span>
+  );
+}
+
 export type ButtonProps = ComponentProps<"button"> & Variants;
 
-export function Button({ className, variant, size, fullWidth, type = "button", ...props }: ButtonProps) {
-  return <button type={type} className={cn(buttonVariants({ variant, size, fullWidth }), className)} {...props} />;
+export function Button({ className, variant, size, fullWidth, type = "button", children, ...props }: ButtonProps) {
+  return (
+    <button type={type} data-magnetic className={cn(buttonVariants({ variant, size, fullWidth }), className)} {...props}>
+      <RollLabel>{children}</RollLabel>
+    </button>
+  );
 }
 
 export type ButtonLinkProps = ComponentProps<typeof Link> & Variants & { children: ReactNode };
 
 /** Lien interne (localisé) en forme de bouton pilule */
-export function ButtonLink({ className, variant, size, fullWidth, ...props }: ButtonLinkProps) {
-  return <Link className={cn(buttonVariants({ variant, size, fullWidth }), className)} {...props} />;
+export function ButtonLink({ className, variant, size, fullWidth, children, ...props }: ButtonLinkProps) {
+  return (
+    <Link data-magnetic className={cn(buttonVariants({ variant, size, fullWidth }), className)} {...props}>
+      <RollLabel>{children}</RollLabel>
+    </Link>
+  );
 }
 
 /** Bouton secondaire : texte souligné d'un filet d'1 px, flèche optionnelle */
@@ -58,9 +80,13 @@ export function LinkUnderline({
   ...props
 }: ComponentProps<typeof Link> & { arrow?: boolean; children: ReactNode }) {
   return (
-    <Link className={cn("link-underline text-[15px]", className)} {...props}>
+    <Link className={cn("link-underline link-sweep text-[15px]", className)} {...props}>
       {children}
-      {arrow && <span aria-hidden>→</span>}
+      {arrow && (
+        <span aria-hidden className="link-arrow">
+          →
+        </span>
+      )}
     </Link>
   );
 }
@@ -74,9 +100,17 @@ export function UnderlineButton({
   ...props
 }: ComponentProps<"button"> & { arrow?: boolean }) {
   return (
-    <button type={type} className={cn("link-underline cursor-pointer text-[15px] disabled:opacity-40", className)} {...props}>
+    <button
+      type={type}
+      className={cn("link-underline link-sweep cursor-pointer text-[15px] disabled:opacity-40", className)}
+      {...props}
+    >
       {children}
-      {arrow && <span aria-hidden>→</span>}
+      {arrow && (
+        <span aria-hidden className="link-arrow">
+          →
+        </span>
+      )}
     </button>
   );
 }

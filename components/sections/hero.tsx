@@ -1,10 +1,12 @@
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import type { ImageKey } from "@/config/images";
 import type { Locale } from "@/i18n/routing";
 import { imageExists } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import { Media } from "@/components/ui/media";
-import { Parallax } from "@/components/ui/reveal";
+import { Parallax } from "@/components/ui/parallax";
+import { delayStyle } from "@/components/ui/reveal";
 import { SectionLabel } from "@/components/ui/typography";
 
 type HeroProps = {
@@ -31,8 +33,10 @@ type HeroProps = {
 /**
  * Hero photo : plein écran (accueil) ou demi-hauteur 60vh (pages intérieures).
  * Texte blanc sur voile dégradé noir, léger parallaxe sur l'image.
+ * À l'arrivée : la photo se pose (zoom arrière lent), puis repère, titre et texte montent en cascade
+ * (animations CSS : elles démarrent sans attendre le JavaScript).
  */
-export function Hero({
+export async function Hero({
   locale,
   image,
   mobileImage,
@@ -45,6 +49,7 @@ export function Hero({
   size = "page",
 }: HeroProps) {
   const full = size === "full";
+  const t = await getTranslations({ locale, namespace: "common" });
   return (
     <section
       data-hero-photo
@@ -57,30 +62,32 @@ export function Hero({
       <div className="absolute inset-0 -z-10">
         {visual ?? (
           <Parallax>
-            {mobileImage ? (
-              <>
-                <Media
-                  imageKey={mobileImage}
-                  locale={locale}
-                  available={imageExists(mobileImage)}
-                  sizes="100vw"
-                  priority
-                  ratio="fill"
-                  className="md:hidden"
-                />
-                <Media
-                  imageKey={image}
-                  locale={locale}
-                  available={imageExists(image)}
-                  sizes="100vw"
-                  priority
-                  ratio="fill"
-                  className="hidden md:block"
-                />
-              </>
-            ) : (
-              <Media imageKey={image} locale={locale} available={imageExists(image)} sizes="100vw" priority ratio="fill" />
-            )}
+            <div className="hero-zoom absolute inset-0">
+              {mobileImage ? (
+                <>
+                  <Media
+                    imageKey={mobileImage}
+                    locale={locale}
+                    available={imageExists(mobileImage)}
+                    sizes="100vw"
+                    priority
+                    ratio="fill"
+                    className="md:hidden"
+                  />
+                  <Media
+                    imageKey={image}
+                    locale={locale}
+                    available={imageExists(image)}
+                    sizes="100vw"
+                    priority
+                    ratio="fill"
+                    className="hidden md:block"
+                  />
+                </>
+              ) : (
+                <Media imageKey={image} locale={locale} available={imageExists(image)} sizes="100vw" priority ratio="fill" />
+              )}
+            </div>
           </Parallax>
         )}
         {/* Voiles localisés : garantissent le contraste AA du texte blanc posé sur les zones claires de la photo */}
@@ -94,19 +101,39 @@ export function Hero({
       </div>
 
       <div className="container-site relative z-10 flex w-full flex-col pb-12 pt-[calc(var(--header-h)+16px)] md:pb-16">
-        {breadcrumbs}
+        {breadcrumbs && (
+          <div className="intro-rise" style={delayStyle(0.1)}>
+            {breadcrumbs}
+          </div>
+        )}
         <div className={cn("mt-auto grid gap-10", full && "lg:grid-cols-12 lg:items-end lg:gap-8")}>
           <div className={full ? "lg:col-span-8" : "max-w-5xl"}>
             {label && (
-              <SectionLabel tone="light" className="mb-6 md:mb-8">
-                {label}
-              </SectionLabel>
+              <div className="intro-rise" style={delayStyle(0.05)}>
+                <SectionLabel tone="light" className="mb-6 md:mb-8">
+                  {label}
+                </SectionLabel>
+              </div>
             )}
             {title}
-            {children && <div className="mt-6 max-w-xl text-lead text-white/90">{children}</div>}
+            {children && (
+              <div className="intro-rise mt-6 max-w-xl text-lead text-white/90" style={delayStyle(0.55)}>
+                {children}
+              </div>
+            )}
           </div>
-          {aside && <div className="lg:col-span-4 lg:pb-2">{aside}</div>}
+          {aside && (
+            <div className="intro-rise lg:col-span-4 lg:pb-2" style={delayStyle(0.7)}>
+              {aside}
+            </div>
+          )}
         </div>
+        {full && (
+          <div aria-hidden className="intro-rise mt-12 hidden items-center gap-4 md:flex" style={delayStyle(1.1)}>
+            <span className="scroll-cue-line" />
+            <span className="label-mono text-white/80">{t("scroll")}</span>
+          </div>
+        )}
       </div>
     </section>
   );

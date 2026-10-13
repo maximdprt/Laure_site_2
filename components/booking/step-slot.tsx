@@ -128,7 +128,7 @@ export function StepSlot({
               {slots.length === 0 ? (
                 <p className="text-ink-muted">{t("noSlotsDay")}</p>
               ) : (
-                <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-3">
+                <ul key={day} className="step-in grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-3">
                   {slots.map((iso) => {
                     const checked = iso === selected;
                     const id = `slot-${iso}`;
@@ -146,7 +146,7 @@ export function StepSlot({
                         <label
                           htmlFor={id}
                           className={cn(
-                            "flex min-h-12 cursor-pointer items-center justify-center rounded-full border font-mono text-[14px] transition-colors",
+                            "flex min-h-12 cursor-pointer items-center justify-center rounded-full border font-mono text-[14px] transition-[background-color,border-color,color,scale] duration-300 ease-soft active:scale-95",
                             "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-ink",
                             checked ? "border-ink bg-ink text-white" : "border-line hover:border-ink",
                           )}

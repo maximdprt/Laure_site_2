@@ -10,6 +10,9 @@ import { siteConfig } from "@/config/site";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { MobileCta } from "@/components/layout/mobile-cta";
+import { PointerEffects } from "@/components/motion/pointer-effects";
+import { RevealObserver } from "@/components/motion/reveal-observer";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { CartDrawer } from "@/components/shop/cart-drawer";
 import "../globals.css";
 
@@ -82,6 +85,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           <Footer />
           <MobileCta />
           <CartDrawer imageAvailability={imageAvailability()} />
+          <PointerEffects />
+          <SmoothScroll />
+          <RevealObserver />
         </NextIntlClientProvider>
         <Analytics />
       </body>

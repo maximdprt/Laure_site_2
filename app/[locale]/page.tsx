@@ -93,12 +93,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <section aria-labelledby="comment" className="grid lg:grid-cols-2">
         <FullBleedImage imageKey="test-couleurs" locale={locale} sizes="(min-width: 1024px) 50vw, 100vw" ratio="4/5" />
         <div className="flex flex-col justify-center px-[var(--gutter)] py-20 md:py-28 lg:px-16 xl:px-24">
-          <SectionLabel number="02" className="mb-8">
-            {c.how.label}
-          </SectionLabel>
           <Reveal>
-            <SplitTitle id="comment" lead={c.how.title.lead} accent={c.how.title.accent} breakBefore />
+            <SectionLabel number="02" className="mb-8">
+              {c.how.label}
+            </SectionLabel>
           </Reveal>
+          <SplitTitle id="comment" lead={c.how.title.lead} accent={c.how.title.accent} breakBefore />
           <RuleList className="mt-12">
             {c.how.steps.map((step, i) => (
               <RuleItem key={step.title} className="grid grid-cols-[3rem_1fr] gap-4">
@@ -131,8 +131,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 locale={locale}
                 sizes="(min-width: 1024px) 25vw, 50vw"
                 ratio="3/4"
+                revealDelay={i * 0.12}
               />
-              <Reveal index={i} className="px-[var(--gutter)] pb-2 pt-5 lg:px-6">
+              <Reveal delay={0.3 + i * 0.12} className="px-[var(--gutter)] pb-2 pt-5 lg:px-6">
                 <h3 className="text-[22px] font-light tracking-[-0.02em]">
                   <span className="serif-accent text-[26px]">{item.name}</span>
                 </h3>
@@ -146,17 +147,19 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {/* 5. (04) Votre flacon est unique */}
       <section aria-labelledby="flacon" className="grid lg:grid-cols-2">
         <div className="order-2 flex flex-col justify-center px-[var(--gutter)] py-20 md:py-28 lg:order-1 lg:px-16 xl:px-24">
-          <SectionLabel number="04" className="mb-8">
-            {c.bottle.label}
-          </SectionLabel>
           <Reveal>
-            <SplitTitle id="flacon" size="h1" lead={c.bottle.title.lead} accent={c.bottle.title.accent} breakBefore />
+            <SectionLabel number="04" className="mb-8">
+              {c.bottle.label}
+            </SectionLabel>
           </Reveal>
-          <p className="mt-10 max-w-lg text-ink-muted">{c.bottle.text}</p>
-          <p className="serif-accent mt-6 max-w-xl text-[26px] leading-[1.25]">{c.bottle.periods}</p>
-          <div className="mt-10">
-            <ButtonLink href={{ pathname: "/rendez-vous", query: { service: "pack" } }}>{c.bottle.cta}</ButtonLink>
-          </div>
+          <SplitTitle id="flacon" size="h1" lead={c.bottle.title.lead} accent={c.bottle.title.accent} breakBefore />
+          <Reveal delay={0.2}>
+            <p className="mt-10 max-w-lg text-ink-muted">{c.bottle.text}</p>
+            <p className="serif-accent mt-6 max-w-xl text-[26px] leading-[1.25]">{c.bottle.periods}</p>
+            <div className="mt-10">
+              <ButtonLink href={{ pathname: "/rendez-vous", query: { service: "pack" } }}>{c.bottle.cta}</ButtonLink>
+            </div>
+          </Reveal>
         </div>
         <FullBleedImage
           imageKey="preparation"
@@ -175,14 +178,28 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             ["distance", c.places.distance],
           ] as const
         ).map(([image, place]) => (
-          <Link key={image} href="/rendez-vous" className="group block">
-            <FullBleedImage imageKey={image} locale={locale} sizes="(min-width: 768px) 50vw, 100vw" ratio="4/5" veil decorative hoverZoom>
+          <Link key={image} href="/rendez-vous" className="group block" data-cursor="book">
+            <FullBleedImage
+              imageKey={image}
+              locale={locale}
+              sizes="(min-width: 768px) 50vw, 100vw"
+              ratio="4/5"
+              veil
+              decorative
+              hoverZoom
+              revealDelay={image === "distance" ? 0.12 : 0}
+            >
               <div className="flex h-full flex-col justify-end p-[var(--gutter)] md:p-10">
-                <h2 className="text-h2 font-light">
+                <h2 className="text-h2 font-light transition-[translate] duration-700 ease-soft group-hover:-translate-y-1.5">
                   {place.title.lead && <>{place.title.lead} </>}
                   <span className="serif-accent">{place.title.accent}</span>
                 </h2>
-                <p className="label-mono mt-4 text-white/90">{place.caption}</p>
+                <p className="label-mono mt-4 flex items-center gap-3 text-white/90">
+                  {place.caption}
+                  <span aria-hidden className="inline-block transition-[translate] duration-700 ease-soft group-hover:translate-x-1.5">
+                    →
+                  </span>
+                </p>
               </div>
             </FullBleedImage>
           </Link>

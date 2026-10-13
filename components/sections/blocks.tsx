@@ -93,14 +93,16 @@ export function SplitSection({
         )}
       >
         {label && (
-          <SectionLabel number={number} className="mb-8">
-            {label}
-          </SectionLabel>
+          <Reveal>
+            <SectionLabel number={number} className="mb-8">
+              {label}
+            </SectionLabel>
+          </Reveal>
         )}
-        <Reveal>
-          <TitledHeading title={title} id={id} breakBefore />
+        <TitledHeading title={title} id={id} breakBefore />
+        <Reveal className="mt-10" delay={0.2}>
+          {children}
         </Reveal>
-        <div className="mt-10">{children}</div>
       </div>
     </section>
   );
@@ -128,7 +130,7 @@ export function StepsList({ steps, className }: { steps: { title: string; text: 
 /** Liste à filets en 2 colonnes (thèmes, situations) */
 export function TwoColumnRuleList({ items }: { items: string[] }) {
   return (
-    <ul className="grid border-t border-ink md:grid-cols-2 md:gap-x-10">
+    <ul data-reveal="rules" className="rule-line grid md:grid-cols-2 md:gap-x-10">
       {items.map((item, i) => (
         <li key={item} className="flex items-baseline gap-5 border-b border-line py-5">
           <MonoLabel>{String(i + 1).padStart(2, "0")}</MonoLabel>

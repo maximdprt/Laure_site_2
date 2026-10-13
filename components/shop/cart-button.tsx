@@ -19,7 +19,16 @@ export function CartButton() {
       className="link-underline cursor-pointer text-[14px] after:scale-x-0 hover:after:scale-x-100"
       aria-label={`${t("open")} – ${t("count", { count })}`}
     >
-      {t("label")} ({count})
+      {/* .link-underline est en inline-flex (avec gap) : le libellé et le compteur forment un seul bloc */}
+      <span>
+        {t("label")} (
+        <span className="inline-block overflow-hidden align-bottom">
+          <span key={count} className={hydrated && count > 0 ? "count-roll" : undefined}>
+            {count}
+          </span>
+        </span>
+        )
+      </span>
     </button>
   );
 }

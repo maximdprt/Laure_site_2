@@ -4,16 +4,20 @@ import { useTranslations } from "next-intl";
 import { useId, type ComponentProps, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-/** Saisie sans bordure, filet en dessous ; focus = filet noir de 2 px */
+/** Saisie sans bordure, filet en dessous */
 const controlBase = cn(
   "w-full rounded-none border-0 border-b border-line bg-transparent px-0 text-[18px] text-ink placeholder:text-ink-muted/70",
-  "transition-[border-color,box-shadow] duration-200",
-  "focus-visible:border-ink focus-visible:shadow-[0_1px_0_0_var(--color-ink)] focus-visible:outline-none",
-  "aria-[invalid=true]:border-danger",
+  "focus-visible:outline-none aria-[invalid=true]:border-danger",
 );
 
-const darkControl =
-  "border-white/30 text-white placeholder:text-white/50 focus-visible:border-white focus-visible:shadow-[0_1px_0_0_#fff]";
+/** Focus : un filet de 2 px se trace de gauche à droite (.field-draw, couleur du texte) */
+const drawnFocus = "field-draw";
+
+/** Focus sans tracé (select : son arrière-plan porte déjà le chevron) */
+const plainFocus =
+  "transition-[border-color,box-shadow] duration-200 focus-visible:border-ink focus-visible:shadow-[0_1px_0_0_var(--color-ink)]";
+
+const darkControl = "border-white/30 text-white placeholder:text-white/50";
 
 /** Traduit une clé d'erreur zod (forms.errors.*) */
 export function useErrorMessage() {
@@ -66,11 +70,11 @@ export function Field({ label, error, help, optional, tone = "light", className,
 }
 
 export function Input({ className, tone = "light", ...props }: ComponentProps<"input"> & { tone?: "light" | "dark" }) {
-  return <input className={cn(controlBase, "min-h-11 py-2", tone === "dark" && darkControl, className)} {...props} />;
+  return <input className={cn(controlBase, drawnFocus, "min-h-11 py-2", tone === "dark" && darkControl, className)} {...props} />;
 }
 
 export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
-  return <textarea className={cn(controlBase, "min-h-32 resize-y py-2 leading-relaxed", className)} {...props} />;
+  return <textarea className={cn(controlBase, drawnFocus, "min-h-32 resize-y py-2 leading-relaxed", className)} {...props} />;
 }
 
 export function Select({ className, ...props }: ComponentProps<"select">) {
@@ -78,6 +82,7 @@ export function Select({ className, ...props }: ComponentProps<"select">) {
     <select
       className={cn(
         controlBase,
+        plainFocus,
         "min-h-11 cursor-pointer appearance-none bg-[url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23111111' stroke-width='1.2'><path d='M3 5l4 4 4-4'/></svg>\")] bg-[length:14px] bg-[right_0_center] bg-no-repeat py-2 pr-8",
         className,
       )}
