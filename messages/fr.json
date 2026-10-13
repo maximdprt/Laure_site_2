@@ -17,6 +17,9 @@
     "home": "Accueil NLIGHT",
     "externalLink": "(nouvel onglet)"
   },
+  "legal": {
+    "updated": "Mise à jour : {date}"
+  },
   "nav": {
     "home": "Accueil",
     "test": "Le Test",
@@ -112,7 +115,12 @@
     "success": "Merci, votre message est bien parti. Vous recevez un accusé de réception par e-mail.",
     "coordinatesTitle": "Coordonnées",
     "hours": "Horaires indicatifs",
-    "address": "Cabinet"
+    "address": "Cabinet",
+    "label": "Écrire",
+    "titleLead": "Écrire",
+    "titleAccent": "à Laure.",
+    "subjectPlaceholder": "Choisir un sujet",
+    "social": "Réseaux"
   },
   "breadcrumb": {
     "home": "Accueil"
@@ -157,7 +165,9 @@
     "packCardTitle": "Pack Test + préparation personnalisée",
     "packCardText": "Votre première préparation commence par le Test de Profil Chromatique. Le pack se réserve directement dans l'agenda.",
     "packCardCta": "Réserver le pack",
-    "productCount": "{count, plural, one {# flacon} other {# flacons}}"
+    "productCount": "{count, plural, one {# flacon} other {# flacons}}",
+    "relatedLead": "Vous aimerez",
+    "relatedAccent": "aussi"
   },
   "order": {
     "title": "Merci pour votre commande",
@@ -167,7 +177,10 @@
     "shipping": "Livraison",
     "next": "Laure prépare votre commande avec soin. Vous serez informé(e) de l'expédition ou du retrait par e-mail.",
     "notFound": "Nous n'avons pas retrouvé cette commande. Si vous avez été débité(e), vérifiez votre boîte e-mail ou contactez Laure.",
-    "continue": "Continuer sur le site"
+    "continue": "Continuer sur le site",
+    "reference": "Commande",
+    "titleLead": "Merci pour",
+    "titleAccent": "votre commande."
   },
   "booking": {
     "steps": {
@@ -228,7 +241,37 @@
     "preferTalkTitle": "Vous préférez échanger d'abord ?",
     "preferTalkText": "Réservez un appel découverte gratuit de 15 minutes pour poser vos questions avant de vous engager.",
     "preferTalkCta": "Réserver l'appel découverte",
-    "change": "Modifier"
+    "change": "Modifier",
+    "metaTitle": "Prendre rendez-vous : Test de Profil Chromatique à Lacanau ou à distance | NLIGHT",
+    "metaDescription": "Réservez votre Test de Profil Chromatique, une séance de suivi ou un appel découverte gratuit avec Laure Dupuch, à Lacanau ou à distance.",
+    "pageLabel": "Rendez-vous",
+    "pageTitleLead": "Prendre",
+    "pageTitleAccent": "rendez-vous.",
+    "pageIntro": "Choisissez votre prestation, votre format et votre créneau. Vous recevez une confirmation par e-mail immédiatement.",
+    "moduleLabel": "Réservation",
+    "progressLabel": "Progression de la réservation",
+    "stepsNav": "Étapes de la réservation",
+    "stepDone": "étape terminée",
+    "calendarLabel": "Calendrier des disponibilités",
+    "slotsLabel": "Créneaux disponibles",
+    "dayAvailable": "{date}, créneaux disponibles",
+    "dayUnavailable": "{date}, aucun créneau",
+    "daySelected": "{date}, sélectionné",
+    "calendarHelp": "Utilisez les flèches du clavier pour vous déplacer dans le calendrier.",
+    "formatHelp": {
+      "cabinet": "Au cabinet à Lacanau, sur rendez-vous.",
+      "distance": "Par téléphone, où que vous soyez en France. Votre support couleurs vous est envoyé au préalable.",
+      "telephone": "Laure vous appelle au numéro que vous indiquez."
+    },
+    "summaryAddress": "Adresse postale",
+    "summaryMessage": "Ce qui vous amène",
+    "summaryBalance": "Solde réglé en séance",
+    "summaryFree": "Offert",
+    "fieldsError": "Merci de vérifier les champs indiqués.",
+    "coordinatesLabel": "Coordonnées",
+    "contactLabel": "Contact",
+    "featured": "Le plus choisi",
+    "remote": "Séances à distance partout en France"
   },
   "bookingConfirmation": {
     "title": "Votre rendez-vous est confirmé",
@@ -242,7 +285,17 @@
     "prepareGeneral": "Il n'y a rien à préparer de particulier : venez comme vous êtes, avec vos questions.",
     "cancellation": "Besoin d'annuler ou de déplacer ? Contactez Laure par e-mail ou par téléphone, gratuitement jusqu'à {hours} h avant.",
     "pending": "Votre paiement est en cours de validation. Vous recevrez votre confirmation par e-mail dans quelques instants.",
-    "notFound": "Nous n'avons pas retrouvé cette réservation. Vérifiez votre boîte e-mail ou contactez Laure."
+    "notFound": "Nous n'avons pas retrouvé cette réservation. Vérifiez votre boîte e-mail ou contactez Laure.",
+    "metaTitle": "Confirmation de rendez-vous | NLIGHT",
+    "label": "Confirmation",
+    "titleLead": "Votre rendez-vous",
+    "titleLeadFree": "Votre appel découverte",
+    "titleAccent": "est confirmé.",
+    "pendingTitle": "Paiement en cours",
+    "summaryTitle": "Récapitulatif",
+    "paidOnline": "Réglé en ligne",
+    "notFoundTitle": "Réservation introuvable",
+    "bookAgain": "Revenir à la réservation"
   },
   "journal": {
     "title": "Journal",
@@ -262,7 +315,15 @@
     "ctaButton": "Découvrir le test",
     "newsletterTitle": "Recevoir les prochains articles",
     "category": "Catégorie",
-    "publishedOn": "Publié le {date}"
+    "publishedOn": "Publié le {date}",
+    "titleLead": "Le",
+    "label": "Articles",
+    "allArticles": "Tous les articles",
+    "latest": "À la une",
+    "newsletterText": "Recevez les nouveaux articles et quelques nouvelles du cabinet, quelques fois par an.",
+    "backToJournal": "Retour au Journal",
+    "authorLink": "En savoir plus sur Laure",
+    "empty": "Les premiers articles arrivent bientôt."
   },
   "notFound": {
     "title": "Cette page s'est éclipsée",
@@ -276,5 +337,13 @@
   },
   "mobileCta": {
     "label": "Prendre rendez-vous"
+  },
+  "pricingList": {
+    "mostChosen": "Le plus choisi",
+    "renewalDetail": "Flacon, sans séance · après un premier test",
+    "readyName": "Flacon thématique prêt à l’emploi",
+    "readyDetail": "Boutique · {volume}",
+    "freeFrom": "Livraison offerte dès {threshold}",
+    "pickupDetail": "Sur rendez-vous, sans frais"
   }
 }

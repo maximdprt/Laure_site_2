@@ -18,6 +18,9 @@
     "home": "NLIGHT home",
     "externalLink": "(opens in a new tab)"
   },
+  "legal": {
+    "updated": "Last updated: {date}"
+  },
   "nav": {
     "home": "Home",
     "test": "The Test",
@@ -113,7 +116,12 @@
     "success": "Thank you, your message has been sent. You will receive an acknowledgement by email.",
     "coordinatesTitle": "Contact details",
     "hours": "Indicative hours",
-    "address": "Practice"
+    "address": "Practice",
+    "label": "Write",
+    "titleLead": "Write",
+    "titleAccent": "to Laure.",
+    "subjectPlaceholder": "Choose a subject",
+    "social": "Social"
   },
   "breadcrumb": {
     "home": "Home"
@@ -158,7 +166,9 @@
     "packCardTitle": "Test + personalised blend package",
     "packCardText": "Your first blend begins with the Chromatic Profile Test. The package is booked directly in the calendar.",
     "packCardCta": "Book the package",
-    "productCount": "{count, plural, one {# bottle} other {# bottles}}"
+    "productCount": "{count, plural, one {# bottle} other {# bottles}}",
+    "relatedLead": "You may",
+    "relatedAccent": "also like"
   },
   "order": {
     "title": "Thank you for your order",
@@ -168,7 +178,10 @@
     "shipping": "Delivery",
     "next": "Laure is preparing your order with care. You will be informed by email when it ships or is ready for collection.",
     "notFound": "We couldn't find this order. If you have been charged, please check your inbox or contact Laure.",
-    "continue": "Continue browsing"
+    "continue": "Continue browsing",
+    "reference": "Order",
+    "titleLead": "Thank you for",
+    "titleAccent": "your order."
   },
   "booking": {
     "steps": {
@@ -229,7 +242,37 @@
     "preferTalkTitle": "Would you rather talk first?",
     "preferTalkText": "Book a free 15-minute discovery call to ask your questions before committing.",
     "preferTalkCta": "Book the discovery call",
-    "change": "Change"
+    "change": "Change",
+    "metaTitle": "Book a session: Chromatic Profile Test in Lacanau or remotely | NLIGHT",
+    "metaDescription": "Book your Chromatic Profile Test, a follow-up session or a free discovery call with Laure Dupuch, in Lacanau or remotely.",
+    "pageLabel": "Booking",
+    "pageTitleLead": "Book a",
+    "pageTitleAccent": "session.",
+    "pageIntro": "Choose your service, your format and your time. You will receive a confirmation email straight away.",
+    "moduleLabel": "Booking",
+    "progressLabel": "Booking progress",
+    "stepsNav": "Booking steps",
+    "stepDone": "step completed",
+    "calendarLabel": "Availability calendar",
+    "slotsLabel": "Available times",
+    "dayAvailable": "{date}, times available",
+    "dayUnavailable": "{date}, no times available",
+    "daySelected": "{date}, selected",
+    "calendarHelp": "Use the arrow keys to move around the calendar.",
+    "formatHelp": {
+      "cabinet": "At the practice in Lacanau, by appointment.",
+      "distance": "By phone, wherever you are in France. Your colour cards are sent to you beforehand.",
+      "telephone": "Laure will call you on the number you provide."
+    },
+    "summaryAddress": "Postal address",
+    "summaryMessage": "What brings you here",
+    "summaryBalance": "Balance paid at the session",
+    "summaryFree": "Free",
+    "fieldsError": "Please check the highlighted fields.",
+    "coordinatesLabel": "Contact details",
+    "contactLabel": "Contact",
+    "featured": "Most popular",
+    "remote": "Remote sessions anywhere in France"
   },
   "bookingConfirmation": {
     "title": "Your appointment is confirmed",
@@ -243,7 +286,17 @@
     "prepareGeneral": "There is nothing special to prepare: come as you are, with your questions.",
     "cancellation": "Need to cancel or reschedule? Contact Laure by email or phone, free of charge up to {hours} hours before.",
     "pending": "Your payment is being validated. You will receive your confirmation by email in a few moments.",
-    "notFound": "We couldn't find this booking. Please check your inbox or contact Laure."
+    "notFound": "We couldn't find this booking. Please check your inbox or contact Laure.",
+    "metaTitle": "Booking confirmation | NLIGHT",
+    "label": "Confirmation",
+    "titleLead": "Your appointment",
+    "titleLeadFree": "Your discovery call",
+    "titleAccent": "is confirmed.",
+    "pendingTitle": "Payment in progress",
+    "summaryTitle": "Summary",
+    "paidOnline": "Paid online",
+    "notFoundTitle": "Booking not found",
+    "bookAgain": "Back to booking"
   },
   "journal": {
     "title": "Journal",
@@ -263,7 +316,15 @@
     "ctaButton": "Discover the test",
     "newsletterTitle": "Receive the next articles",
     "category": "Category",
-    "publishedOn": "Published on {date}"
+    "publishedOn": "Published on {date}",
+    "titleLead": "The",
+    "label": "Articles",
+    "allArticles": "All articles",
+    "latest": "Latest",
+    "newsletterText": "Receive new articles and a little news from the practice, a few times a year.",
+    "backToJournal": "Back to the Journal",
+    "authorLink": "More about Laure",
+    "empty": "The first articles are coming soon."
   },
   "notFound": {
     "title": "This page has slipped away",
@@ -277,5 +338,13 @@
   },
   "mobileCta": {
     "label": "Book a session"
+  },
+  "pricingList": {
+    "mostChosen": "Most popular",
+    "renewalDetail": "Bottle only, no session · after a first test",
+    "readyName": "Ready-to-use themed bottle",
+    "readyDetail": "Shop · {volume}",
+    "freeFrom": "Free delivery from {threshold}",
+    "pickupDetail": "By appointment, free of charge"
   }
 }
