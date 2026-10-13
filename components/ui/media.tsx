@@ -74,7 +74,7 @@ export function Media({
         >
           <span
             aria-hidden
-            className="absolute bottom-3 right-3 font-mono text-[11px] uppercase tracking-[0.1em] text-white/80"
+            className="absolute bottom-3 right-3 max-w-[calc(100%-1.5rem)] truncate font-mono text-[10px] uppercase tracking-[0.1em] text-white/80 md:text-[11px]"
           >
             Image {image.number} — {image.name}
           </span>

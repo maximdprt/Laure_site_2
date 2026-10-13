@@ -114,7 +114,7 @@ export async function handleBookingCompleted(session: Stripe.Checkout.Session): 
   if (!record) throw new Error(`Métadonnées de réservation invalides (session ${session.id})`);
 
   const event = await getEvent(record.eventId);
-  // Idempotence : déjà traité
+  // Idempotence : déjà pris en compte
   if (event?.props.status === "confirmed") return;
 
   const paidCents = session.amount_total ?? 0;

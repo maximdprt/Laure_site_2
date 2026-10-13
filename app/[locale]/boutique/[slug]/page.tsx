@@ -125,7 +125,7 @@ export default async function ProductPage({ params }: PageProps<"/[locale]/bouti
       </section>
 
       <Section aria-labelledby="associes">
-        <SectionHeader label={t("shop.related")} title={<SplitTitle id="associes" lead={t("shop.relatedLead")} accent={t("shop.relatedAccent")} />} />
+        <SectionHeader label={t("nav.shop")} title={<SplitTitle id="associes" lead={t("shop.relatedLead")} accent={t("shop.relatedAccent")} />} />
         <ul className="grid grid-cols-2 gap-x-1 gap-y-12 md:gap-x-6 lg:grid-cols-4">
           {related.map((p, i) => (
             <Reveal as="li" key={p.slug} index={i}>

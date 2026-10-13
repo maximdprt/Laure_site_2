@@ -328,12 +328,16 @@
   "notFound": {
     "title": "Cette page s'est éclipsée",
     "text": "La page que vous cherchez n'existe pas ou a été déplacée.",
-    "testCta": "Découvrir le Test de Profil Chromatique"
+    "testCta": "Découvrir le Test de Profil Chromatique",
+    "titleLead": "Cette page",
+    "titleAccent": "s’est éclipsée."
   },
   "error": {
     "title": "Un petit contretemps",
     "text": "Une erreur inattendue est survenue. Merci de réessayer.",
-    "retry": "Réessayer"
+    "retry": "Réessayer",
+    "titleLead": "Un petit",
+    "titleAccent": "contretemps."
   },
   "mobileCta": {
     "label": "Prendre rendez-vous"
