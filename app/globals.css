@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   NLIGHT — direction artistique « éditorial photo »
+   Les couleurs viennent des photos, pas de l'interface : pierre claire, encre, blanc.
+   Pas de cartes, pas d'ombres, pas d'arrondis sur les images : des listes à filets.
+   Les tokens déclarés dans @theme sont exposés en variables CSS sur :root
+   (var(--color-bg)…) et génèrent les utilitaires Tailwind (bg-bg, text-ink…).
+   ========================================================================== */
+@theme static {
+  --color-bg: #efeeea; /* pierre claire – fond principal */
+  --color-paper: #ffffff; /* blocs ponctuels (récapitulatif de réservation) */
+  --color-ink: #111111; /* texte, boutons primaires, filets forts */
+  --color-ink-muted: #6b6862; /* texte secondaire, repères (01) — 4,78:1 sur pierre */
+  --color-line: #cfcbc3; /* filets fins */
+  --color-dark: #111111; /* footer */
+  --color-on-dark: #bdb9b1; /* texte sur fond sombre — 9,66:1 */
+  --color-danger: #9b3b2f; /* erreurs de formulaire — 5,91:1 sur pierre */
+
+  --font-sans: var(--font-geist), "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), "Instrument Serif", Georgia, serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Échelle typographique fluide */
+  --text-h1: clamp(48px, 7.4vw, 112px);
+  --text-h2: clamp(40px, 5.2vw, 76px);
+  --text-h3: clamp(26px, 2.4vw, 34px);
+  --text-manifesto: clamp(30px, 3.6vw, 50px);
+  --text-lead: clamp(18px, 1.4vw, 21px);
+  --text-body: 17px;
+  --text-label: 12px;
+}
+
+:root {
+  --header-h: 76px;
+  --gutter: 20px;
+  color-scheme: light;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    font-weight: 400;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    color: inherit;
+    text-wrap: balance;
+  }
+
+  h1 {
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+  }
+
+  h2 {
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  h3 {
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: calc(1360px + 2 * var(--gutter));
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .prose-site {
+    max-width: 64ch;
+  }
+
+  /* Repères et labels : Geist Mono 12 px, majuscules */
+  .label-mono {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  /* Accent serif italique : 2e partie des titres, prix, citations */
+  .serif-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Lien souligné d'un filet d'1 px qui s'étire au survol */
+  .link-underline {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding-block: 0.35em;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0.2em;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-soft);
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1.12);
+  }
+
+  /* Voile en dégradé noir pour le texte blanc posé sur une photo (contraste AA) */
+  .photo-veil::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgb(0 0 0 / 0) 0%, rgb(0 0 0 / 0.18) 45%, rgb(0 0 0 / 0.62) 100%);
+  }
+  .photo-veil-strong::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgb(0 0 0 / 0.35) 0%, rgb(0 0 0 / 0.28) 40%, rgb(0 0 0 / 0.65) 100%);
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes skeleton-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton {
+  background: color-mix(in srgb, var(--color-line) 55%, transparent);
+  animation: skeleton-pulse 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Titres du hero : apparition ligne par ligne (CSS, sans attendre le JavaScript) */
+@keyframes line-rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.line-rise {
+  display: block;
+  animation: line-rise 1s var(--ease-soft) both;
+}
+
+/* --------------------------------------------------------------------------
+   Header : transparent et texte blanc par-dessus une photo de hero
+   (pages qui contiennent [data-hero-photo]) tant que l'on est en haut de page ;
+   fond pierre translucide et texte noir dès que l'on défile.
+   -------------------------------------------------------------------------- */
+.site-header {
+  color: var(--color-ink);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+.site-header[data-at-top="false"] {
+  background: rgb(239 238 234 / 0.82);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom-color: rgb(207 203 195 / 0.6);
+}
+body:has([data-hero-photo]) .site-header[data-at-top="true"] {
+  color: #ffffff;
+}

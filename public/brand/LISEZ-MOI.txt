@@ -1,0 +1,2 @@
+Déposer ici le logo exporté d Illustrator : logo.svg (noir), logo-blanc.svg (blanc) et logo.png (1024 px, fond transparent).
+Puis passer `logo.useSvg` à true dans config/site.ts.
