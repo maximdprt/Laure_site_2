@@ -41,7 +41,7 @@ export default async function PricingPage({ params }: PageProps<"/[locale]/tarif
     <>
       <Hero
         locale={locale}
-        image="univers-couleurs"
+        image="flacons-cabinet"
         breadcrumbs={<Breadcrumbs tone="light" items={[{ label: t("nav.pricing"), href: PATH }]} />}
         label={c.hero.label}
         title={<SplitTitle as="h1" lead={c.hero.title} accent={c.hero.accent} />}

@@ -15,7 +15,8 @@ export function imageExists(key: ImageKey): boolean {
   } catch {
     exists = false;
   }
-  cache.set(key, exists);
+  // En développement, pas de cache : une image ajoutée apparaît sans redémarrer le serveur
+  if (process.env.NODE_ENV === "production") cache.set(key, exists);
   return exists;
 }
 

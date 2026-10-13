@@ -60,7 +60,7 @@ export default async function TestPage({ params }: PageProps<"/[locale]/test-pro
         </div>
       </Section>
 
-      <SplitSection locale={locale} image="distance" number="02" label={c.hook.label} title={{ lead: c.whatIs.title.lead, accent: c.whatIs.title.accent }} id="quest-ce">
+      <SplitSection locale={locale} image="univers-couleurs" number="02" label={c.hook.label} title={{ lead: c.whatIs.title.lead, accent: c.whatIs.title.accent }} id="quest-ce">
         <p className="serif-accent text-[26px] leading-[1.25]">{c.hook.question}</p>
         <RichText text={c.hook.text} className="mt-6 text-ink-muted" />
         <RichText text={c.whatIs.text} className="mt-5 text-ink-muted" />
@@ -92,7 +92,7 @@ export default async function TestPage({ params }: PageProps<"/[locale]/test-pro
 
       <SplitSection
         locale={locale}
-        image="lacanau"
+        image="distance"
         imageSide="right"
         number="06"
         label={c.remote.label}

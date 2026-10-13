@@ -83,6 +83,14 @@ export function Hero({
             )}
           </Parallax>
         )}
+        {/* Voiles localisés : garantissent le contraste AA du texte blanc posé sur les zones claires de la photo */}
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent via-black/45 to-black/70 md:hidden" />
+        {full && (
+          <div
+            aria-hidden
+            className="absolute inset-0 hidden bg-[radial-gradient(45%_45%_at_85%_82%,rgb(0_0_0/0.6),transparent_75%)] lg:block"
+          />
+        )}
       </div>
 
       <div className="container-site relative z-10 flex w-full flex-col pb-12 pt-[calc(var(--header-h)+16px)] md:pb-16">

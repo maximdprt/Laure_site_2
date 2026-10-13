@@ -36,7 +36,7 @@ export default async function SupportPage({ params }: PageProps<"/[locale]/accom
     <>
       <Hero
         locale={locale}
-        image="univers-sons"
+        image="cabinet"
         breadcrumbs={<Breadcrumbs tone="light" items={[{ label: t("nav.support"), href: PATH }]} />}
         label={c.hero.label}
         title={<SplitTitle as="h1" lead={c.hero.title} accent={c.hero.accent} />}

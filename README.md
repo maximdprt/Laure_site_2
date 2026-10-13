@@ -126,10 +126,8 @@ Mise en forme dans les textes : `**gras**`, `*italique en serif*`. Une ligne vid
 
 ## 8. Ajouter les images et le logo
 
-- **Images** : générez-les avec `PROMPTS_IMAGES_NLIGHT.md` et déposez-les dans `public/images/` avec exactement ces noms :
-  `hero.jpg`, `hero-mobile.jpg`, `test-couleurs.jpg`, `univers-fleurs.jpg`, `univers-couleurs.jpg`, `univers-sons.jpg`, `univers-cristaux.jpg`, `preparation.jpg`, `lacanau.jpg`, `distance.jpg`, `cta.jpg`, `flacon-serenite-detente.jpg`, `flacon-confiance-en-soi.jpg`, `flacon-lacher-prise.jpg`, `flacon-sommeil.jpg`, `flacon-gestion-des-emotions.jpg`, `flacon-energie-vitalite.jpg`, `flacon-protection.jpg`, `flacon-ressource.jpg`.
-  Tant qu'une image manque, un dégradé avec l'étiquette « IMAGE 0X — NOM » s'affiche à sa place.
-- **Portrait** : `public/images/laure-portrait.jpg` doit être une **vraie photo** de Laure (jamais une image générée).
+- **Images** : elles sont dans `public/images/` (hero, test, 4 univers, préparation, Lacanau, distance, section finale, 8 flacons, cabinet, flacons du cabinet, chemin de Lacanau). Pour en remplacer une, déposez un fichier **du même nom** et adaptez son texte alternatif dans `config/images.ts`. Si un fichier manque, un dégradé avec l’étiquette « IMAGE 0X — NOM » s’affiche à sa place.
+- **Portrait** : `public/images/laure-portrait.jpg` doit rester une **vraie photo** de Laure (jamais une image générée).
 - **Logo** : déposez `logo.svg` (noir) et `logo-blanc.svg` dans `public/brand/`, puis passez `logo: { useSvg: true }` dans `config/site.ts`.
 - Textes alternatifs (accessibilité) des images : `config/images.ts`.
 
@@ -140,7 +138,6 @@ Cherchez `[À COMPLÉTER` (et `[TO COMPLETE` pour l'anglais) dans le projet. Ré
 | # | Information | Où |
 |---|---|---|
 | 1 | Logo SVG / PNG | `public/brand/`, `config/site.ts` |
-| 1 bis | Images 01 à 18 | `public/images/` |
 | 2 | E-mail, téléphone, adresse du cabinet, horaires indicatifs | `config/site.ts` |
 | 3 | Statut juridique, SIRET, adresse légale, médiateur de la consommation, titulaire de la marque Chromobioénergie® | `config/legal.ts` |
 | 4 | Validation des prix, de l'acompte (20 €) et de l'annulation (48 h) ; mention TVA (art. 293 B) | `config/services.ts`, `config/products.ts`, `content/*/pricing.ts` |
@@ -148,7 +145,6 @@ Cherchez `[À COMPLÉTER` (et `[TO COMPLETE` pour l'anglais) dans le projet. Ré
 | 6 | Composition, contenance et conseils d'utilisation des 8 flacons | `config/products.ts` |
 | 7 | Parcours, formation, organisme de certification | `content/*/about.ts` |
 | 8 | Signification du nom NLIGHT | `content/*/about.ts` |
-| 9 | Vraie photo de Laure | `public/images/laure-portrait.jpg` |
 | 10 | Nom de domaine | Vercel, `NEXT_PUBLIC_SITE_URL` |
 | 11 | Réponses aux FAQ (utilisation, délais, durée d'un flacon, daltonisme, paiement au cabinet) | `content/*/faq.ts` |
 | 12 | Horaires réels et congés | `config/availability.ts` |

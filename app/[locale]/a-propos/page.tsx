@@ -34,7 +34,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/a-propo
     <>
       <Hero
         locale={locale}
-        image="lacanau"
+        image="lacanau-detente"
         breadcrumbs={<Breadcrumbs tone="light" items={[{ label: t("nav.about"), href: PATH }]} />}
         label={c.hero.label}
         title={<h1 className="text-h1 font-light">{c.hero.title}</h1>}
